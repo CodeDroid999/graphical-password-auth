@@ -43,7 +43,7 @@ const Login: React.FC = () => {
         >
           Login
         </button>
-        <p className="p-2">Don't have an account?<a className="text-blue-900 font-bold" href href="/sign-up"> Sign up</a></p>
+        <p className="p-2">Don't have an account?<a className="text-blue-900 font-bold" href="/sign-up"> Sign up</a></p>
       </div>
     </div>
   );
