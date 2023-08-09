@@ -42,26 +42,61 @@ const images = [
   'cats/cat9.jpg',  // Add more image URLs here
 ];
 
+interface SignupFormProps {
+  onSubmit: (username: string, email: string, pin: string) => void;
+}
+
 
 const Signup: React.FC = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [pin, setPin] = useState('');
+  const [selectedPin, setSelectedPin] = useState<string[]>([]);
+  const availablePins = ['1', '2', '3', '4', '5', '6', '7', '8', '9'];
+
+  const handlePinSelect = (pin: string) => {
+    if (selectedPin.length < 4) {
+      setSelectedPin([...selectedPin, pin]);
+    }
+  };
+
+  const handlePinRemove = (index: number) => {
+    const updatedPins = [...selectedPin];
+    updatedPins.splice(index, 1);
+    setSelectedPin(updatedPins);
+  };
+
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    onSubmit(username, email, pin);
+  };
+
 
   const [selectedGrid, setSelectedGrid] = useState('cats'); // Default to cats
 
-  
+
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
 
 
 
-  const handleSignup = () => {
-    // Implement your signup logic here
-    // You can use the entered username, email, and password for registration
-  };
+
   const handleImageClick = (image: string) => {
     setSelectedImage(image);
+  };
+
+  const getGridStyle = () => {
+    if (selectedImage) {
+      return {
+        backgroundImage: `url(${selectedImage})`,
+      };
+    }
+    return {};
+  };
+
+  const handleSignup = (username: string, email: string, pin: string) => {
+    // Handle form submission here (e.g., send data to server)
+    console.log('Submitted:', username, email, pin);
   };
 
   return (
@@ -72,29 +107,26 @@ const Signup: React.FC = () => {
       <div className="bg-blue-500 p-8 px-16 border border-gray-300 rounded-md shadow-lg max-w-md">
         <h2 className="text-2xl font-semibold mb-4 mt-20">Sign Up</h2>
         <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium text-gray-700">
-            Username
-          </label>
+          <label className="block mb-2 font-semibold">Username</label>
           <input
             type="text"
-            id="username"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+            required
           />
         </div>
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium text-gray-700">
-            Email
-          </label>
+          <label className="block mb-2 font-semibold">Email</label>
           <input
             type="email"
-            id="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="mt-1 p-2 border border-gray-300 rounded-md w-full"
+            className="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:border-blue-300"
+            required
           />
         </div>
+       
         <div className="container mx-auto px-2 py-2">
           <h1 className="text-xl font-semibold mb-4">Choose an option</h1>
           <label className="inline-flex items-center">
@@ -128,14 +160,7 @@ const Signup: React.FC = () => {
             <span className="ml-2">Cars</span>
           </label>
         </div>
-        <div className="container mx-auto px-2 py-2">
-        {selectedImage && (
-          <div className="container mx-auto px-4 py-8">
-            <h1 className="text-xl font-semibold mb-4">Selected Image</h1>
-            <img src={selectedImage} alt="Selected" className="w-full h-auto" />
-          </div>
-        )}
-        </div>
+
 
         {/* Conditionally render the selected image grid */}
         {selectedGrid === 'cats' && (
@@ -156,14 +181,48 @@ const Signup: React.FC = () => {
             <CarImageGrid images={carImages} handleImageClick={handleImageClick} />
           </div>
         )}
+         <div className="mb-4">
+          <label className="block mb-2 font-semibold">Choose 4 image sections as your password</label>
+          <div className="grid grid-cols-3 gap-1 w-full h-auto bg-cover bg-center  overflow-hidden relative"
+            style={{
+              backgroundImage: `url(${selectedImage})`,
+            }}>
+            {availablePins.map((pin) => (
+              <button
+                key={pin}
+                type="button"
+                onClick={() => handlePinSelect(pin)}
+                className={`py-8 px-8 border border-black  border-[2px] ${selectedPin.includes(pin)
+                    ? 'bg-opacity-0 text-opacity-0 text-white'
+                    : 'bg-opacity-100 text-opacity-100 text-gray-500'
+                  } hover:bg-opacity-50 hover:text-opacity-0 focus:bg-opacity-0 focus:text-opacity-0 active:bg-opacity-0 active:text-opacity-0`}
+              >
+
+              </button>
+
+            ))}
+          </div>
+          <div className="mt-2">
+            {selectedPin.map((pin, index) => (
+              <button
+                key={index}
+                type="button"
+                onClick={() => handlePinRemove(index)}
+                className="py-1 px-2 border rounded bg-red-500 text-white ml-1"
+              >
+              </button>
+            ))}
+          </div>
+        </div>
 
 
         <button
-          className="bg-indigo-600 text-white font-semibold px-4 py-2 rounded-md hover:bg-indigo-500"
-          onClick={handleSignup}
+          type="submit"
+          className="w-full py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none"
         >
           Sign Up
         </button>
+
         <p className="p-2">Already have an account?<a className="text-blue-900 font-bold" href="/log-in"> Log in</a></p>
       </div>
     </div>
