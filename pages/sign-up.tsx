@@ -1,3 +1,4 @@
+import Navbar from '@/components/navbar';
 import { useState } from 'react';
 
 const Signup: React.FC = () => {
@@ -13,7 +14,10 @@ const Signup: React.FC = () => {
 
   return (
     <div className="bg-blue-200 flex min-h-screen justify-center items-center">
-      <div className="bg-blue-500 p-8 px-16 border border-gray-300 rounded-md shadow-lg max-w-md">
+      <header className="absolute inset-x-0 top-0 z-50 mb-20">
+        <Navbar />
+      </header>
+      <div className="bg-blue-500 mt-20 p-8 px-16 border border-gray-300 rounded-md shadow-lg max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Sign Up</h2>
         <div className="mb-4">
           <label htmlFor="username" className="block text-sm font-medium text-gray-700">

@@ -1,3 +1,4 @@
+import Navbar from '@/components/navbar';
 import { useState } from 'react';
 
 const Login: React.FC = () => {
@@ -11,6 +12,9 @@ const Login: React.FC = () => {
 
   return (
     <div className="bg-blue-200 flex min-h-screen justify-center items-center">
+      <header className="absolute inset-x-0 top-0 z-50">
+       <Navbar />
+        </header>
       <div className="bg-blue-600 p-8 border border-gray-300 rounded-md shadow-lg max-w-md">
         <h2 className="text-2xl font-semibold mb-4">Login</h2>
         <div className="mb-4">

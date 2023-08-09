@@ -1,8 +1,12 @@
 import HowToUseSection from "@/components/HowToUse";
+import Navbar from "@/components/navbar";
 
 const AboutPage: React.FC = () => {
     return (
         <div className="flex  flex-col justify-center items-center w-full ">
+            <header className="absolute inset-x-0 top-0 z-50">
+                <Navbar />
+            </header>
             <div className="bg-blue-200 p-8 px-20 ">
                 <div className="relative isolate px-6 pt-10 lg:px-8">
                     <h2 className="text-2xl text-center p-5 font-semibold mb-4 text-black">About the Tool</h2>
