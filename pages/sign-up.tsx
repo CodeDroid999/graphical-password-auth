@@ -51,10 +51,17 @@ const Signup: React.FC = () => {
 
   const [selectedGrid, setSelectedGrid] = useState('cats'); // Default to cats
 
+  
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
+
+
 
   const handleSignup = () => {
     // Implement your signup logic here
     // You can use the entered username, email, and password for registration
+  };
+  const handleImageClick = (image: string) => {
+    setSelectedImage(image);
   };
 
   return (
@@ -121,24 +128,32 @@ const Signup: React.FC = () => {
             <span className="ml-2">Cars</span>
           </label>
         </div>
+        <div className="container mx-auto px-2 py-2">
+        {selectedImage && (
+          <div className="container mx-auto px-4 py-8">
+            <h1 className="text-xl font-semibold mb-4">Selected Image</h1>
+            <img src={selectedImage} alt="Selected" className="w-full h-auto" />
+          </div>
+        )}
+        </div>
 
         {/* Conditionally render the selected image grid */}
         {selectedGrid === 'cats' && (
           <div className="container mx-auto px-2 py-2">
             <h1 className="text-xl font-semibold mb-4">Choose one cat</h1>
-            <ImageGrid images={images} />
+            <ImageGrid images={images} handleImageClick={handleImageClick} />
           </div>
         )}
         {selectedGrid === 'dogs' && (
           <div className="container mx-auto px-2 py-8">
             <h1 className="text-xl font-semibold mb-4">Choose one dog</h1>
-            <DogImageGrid images={dogImages} />
+            <DogImageGrid images={dogImages} handleImageClick={handleImageClick} />
           </div>
         )}
         {selectedGrid === 'cars' && (
           <div className="container mx-auto px-2 py-2">
             <h1 className="text-xl font-semibold mb-4">Choose one car</h1>
-            <CarImageGrid images={carImages} />
+            <CarImageGrid images={carImages} handleImageClick={handleImageClick} />
           </div>
         )}
 

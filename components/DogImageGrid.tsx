@@ -3,9 +3,10 @@ import React from 'react';
 
 interface DogImageGridProps {
   images: string[];
+  handleImageClick: (image: string) => void;
 }
 
-const DogImageGrid: React.FC<DogImageGridProps> = ({ images }) => {
+const DogImageGrid: React.FC<DogImageGridProps> = ({ images, handleImageClick }) => {
   return (
     <div className="grid grid-cols-3 gap-2">
       {images.map((image, index) => (

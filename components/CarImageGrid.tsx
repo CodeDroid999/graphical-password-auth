@@ -3,9 +3,10 @@ import React from 'react';
 
 interface CarImageGridProps {
   images: string[];
+  handleImageClick: (image: string) => void;
 }
 
-const CarImageGrid: React.FC<CarImageGridProps> = ({ images }) => {
+const CarImageGrid: React.FC<CarImageGridProps> = ({ images, handleImageClick }) => {
   return (
     <div className="grid grid-cols-3 gap-2">
       {images.map((image, index) => (
